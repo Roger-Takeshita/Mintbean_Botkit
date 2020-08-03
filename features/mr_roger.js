@@ -32,7 +32,11 @@ module.exports = function (controller) {
                             });
                         });
 
-                        let msg = `Found ${links.length} Result(s)</br>`;
+                        let msg = `<a href=${res.data[0].owner.html_url} target="_blank">
+                                        <img src=${res.data[0].owner.avatar_url} width="180" height="180" alt="${res.data[0].owner.login}" />
+                                   </a></br></br>
+                                   Found ${links.length} Result(s)</br></br>`;
+
                         links.forEach(async (link) => {
                             msg += `<a href=${link.repoUrl} target="_blank">${link.repoName}</a></br>`;
                         });

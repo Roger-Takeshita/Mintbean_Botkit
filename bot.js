@@ -1,6 +1,6 @@
 //  __   __  ___        ___
-// |__) /  \  |  |__/ |  |  
-// |__) \__/  |  |  \ |  |  
+// |__) /  \  |  |__/ |  |
+// |__) \__/  |  |  \ |  |
 
 // This is the main file for the MrRoger bot.
 
@@ -20,32 +20,31 @@ require('dotenv').config();
 let storage = null;
 if (process.env.MONGO_URI) {
     storage = mongoStorage = new MongoDbStorage({
-        url : process.env.MONGO_URI,
+        url: process.env.MONGO_URI,
     });
 }
 
-
 const adapter = new WebAdapter({});
-
 
 const controller = new Botkit({
     webhook_uri: '/api/messages',
 
     adapter: adapter,
 
-    storage
+    storage,
 });
 
 if (process.env.CMS_URI) {
-    controller.usePlugin(new BotkitCMSHelper({
-        uri: process.env.CMS_URI,
-        token: process.env.CMS_TOKEN,
-    }));
+    controller.usePlugin(
+        new BotkitCMSHelper({
+            uri: process.env.CMS_URI,
+            token: process.env.CMS_TOKEN,
+        })
+    );
 }
 
 // Once the bot has booted up its internal services, you can use them to do stuff.
 controller.ready(() => {
-
     // load traditional developer-created local custom feature modules
     controller.loadModules(__dirname + '/features');
 
@@ -61,10 +60,4 @@ controller.ready(() => {
             }
         });
     }
-
 });
-
-
-
-
-
